@@ -17,6 +17,7 @@ import (
 
 	"github.com/AdRoll/goamz/aws"
 	"github.com/AdRoll/goamz/s3"
+	//"gopkg.in/mgo.v2"
 	redigo "github.com/garyburd/redigo/redis"
 )
 
@@ -56,6 +57,34 @@ func main() {
 	err := decoder.Decode(&config)
 	if err != nil {
 		panic("Error reading conf")
+	}
+
+	if os.Getenv("AccessKey") != "" {
+		config.AccessKey = os.Getenv("AccessKey")
+	}
+
+	if os.Getenv("SecretKey") != "" {
+		config.SecretKey = os.Getenv("SecretKey")
+	}
+
+	if os.Getenv("Bucket") != "" {
+		config.Bucket = os.Getenv("Bucket")
+	}
+
+	if os.Getenv("Region") != "" {
+		config.Region = os.Getenv("Region")
+	}
+
+	if os.Getenv("RedisServerAndPort") != "" {
+		config.RedisServerAndPort = os.Getenv("RedisServerAndPort")
+	}
+
+	if os.Getenv("PORT") != "" {
+		config.Port, err = strconv.Atoi(os.Getenv("PORT"))
+
+		if err != nil {
+			panic("Environment variable Port is supposed to be a number")
+		}
 	}
 
 	initAwsBucket()
@@ -126,8 +155,9 @@ var makeSafeFileName = regexp.MustCompile(`[#<>:"/\|?*\\]`)
 func getFilesFromRedis(ref string) (files []*RedisFile, err error) {
 
 	// Testing - enable to test. Remove later.
-	if 1 == 0 && ref == "test" {
-		files = append(files, &RedisFile{FileName: "test.zip", Folder: "", S3Path: "test/test.zip"}) // Edit and dplicate line to test
+	if 1 == 1 && ref == "test" {
+		files = append(files, &RedisFile{FileName: "udelt.ansattportretter.jpg", Folder: "", S3Path: "udelt.ansattportretter.jpg"}) // Edit and dplicate line to test
+		files = append(files, &RedisFile{FileName: "udelt.webbilder.jpg", Folder: "", S3Path: "udelt.webbilder.jpg"}) // Edit and dplicate line to test
 		return
 	}
 

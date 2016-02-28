@@ -1,2 +1,6 @@
-conf.json
+src
+vendor
 s3zipper.exe
+dev_conf.json
+setenv.sh
+setenv_heroku.sh

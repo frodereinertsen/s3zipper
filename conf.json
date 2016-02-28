@@ -1,0 +1,8 @@
+{
+	"AccessKey": "",
+	"SecretKey": "",
+	"Bucket": "",
+	"Region": "",
+	"RedisServerAndPort": "",
+	"Port": 8001
+}
